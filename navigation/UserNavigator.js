@@ -195,6 +195,7 @@ const MyNavigator = createStackNavigator(
   const MainNavigator = createSwitchNavigator({
     Startup: SplashScreen,
     drawer: drawerNavigator,
+    // test comment
     
   });
 
