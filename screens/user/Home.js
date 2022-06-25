@@ -4,8 +4,6 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons'
 import {Searchbar} from 'react-native-paper'
 import ProductItem from "../../components/ProductItem";
 import CustomHeaderButton from "../../components/HeaderButtons";
-import { ITEMS, shopsDetails} from "../../Data/dummydata";
-//import item from "../../models/items";
 import Colors from "../../constants/Colors";
 import Accessories from "../../components/Accessories";
 import * as shopActions from '../../store/actions/addShop';
@@ -13,7 +11,7 @@ import * as orderActions from '../../store/actions/order';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as productsActions from '../../store/actions/addItem';
-
+// Home Screen
 const Home = props =>{
     const [searchQuery, setSearchQuery] = React.useState('');
     const onChangeSearch = query => setSearchQuery(query);
