@@ -7,26 +7,39 @@ import {
   Text,
   Platform,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet, LogBox
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import { ITEMS } from '../../Data/dummydata';
-import item from '../../models/items';
+
+import { useSelector, useDispatch } from 'react-redux';
+import * as productsActions from '../../store/actions/addItem';
+
 const ProductDetails = props => {
 
+  const productId = props.navigation.getParam('productId');
+  const selectedProduct = useSelector(state =>
+    state.items.availableProducts.find(prod => prod.id === productId)
+  );
 
- 
+  const dispatch = useDispatch();
+  //dispatch(productsActions.fetchItems());
+ // console.log(selectedProduct)
+  useEffect(()=>{
+      LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+     });
+     
   return (
     <View style={styles.centered}>
     <View style={styles.productContainer}>
    <View style={styles.imageContainer}>
-   <Image style={styles.image} source={{uri:'http://assets.stickpng.com/thumbs/5e90a856c7c8f9000434dd97.png'}}/>
+   <Image style={styles.image} source={{uri: selectedProduct.URI}}/>
    </View>
-      <Text style={{fontSize:18, fontWeight:'bold'}}>Iphone X</Text>
-      <Text style={{fontSize:17}}>Price: 70k</Text>
+      <Text style={{fontSize:18, fontWeight:'bold'}}>{selectedProduct.title}</Text>
+      <Text style={{fontSize:17}}>Price: {selectedProduct.price}</Text>
       <Text style={{fontSize:17, marginRight:200, fontWeight:'bold'}}>Features:</Text>
       <View style={{marginHorizontal:10,}}>
-      <Text style={{fontSize:15, marginRight:120}}>Price: 70k, Memory: 2GB, Storage: 124GB, Color:black, Brand: Apple</Text>
+      <Text style={{fontSize:15, marginRight:120}}>{selectedProduct.description}</Text>
       </View>
     </View>
     <View style={{marginHorizontal:10, flexDirection:'row'}}>
@@ -34,12 +47,12 @@ const ProductDetails = props => {
             <Button 
             title='Book Now'
             color={'#13D996'}
-            onPress={()=>{props.navigation.navigate('Booking')}}
+            onPress={()=>{props.navigation.navigate('Booking', {
+              productId: selectedProduct.id,
+            })}}
             />
             </View>
-            <View style={styles.installment}>
-            <Button title='Installments'  />
-            </View>
+           
     </View>
     <Button title='<-Back' color={'grey'} onPress={()=>{props.navigation.goBack(null)}}/>
     </View>
@@ -52,10 +65,8 @@ ProductDetails.navigationOptions = navigationData=> {
       headerStyle:{
           backgroundColor:Colors.headerBackground,
           height: 80, // Specify the height of your custom header
-
         },
-        headerTintColor:Colors.headerTint,
-            
+        headerTintColor:Colors.headerTint,         
   }
  
 };

@@ -2,32 +2,80 @@ import React,  {useState} from "react";
 
 import {View,ScrollView, Text,TextInput,Button, Image, StyleSheet, TouchableNativeFeedback,TouchableOpacity} from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
-import * as authActions from '../../store/actions/auth';
+
 import { useDispatch } from 'react-redux';
 import Colors from "../../constants/Colors";
 
-const Signup = props=>{
+import * as authActions from '../../store/actions/auth';
 
+const Signup = props=>{
+    const [checkError, setCheckError] = useState(false);
+    const [validEmail, setValidEmail] = useState(false);
+    const [validPassword, setValidPassword] = useState(false);
     const [isEmailText, setIsEmailText] = useState('');
     const [isPassText, setIsPassText] = useState('');
+
     const dispatch = useDispatch();
 
+    // Error Checking
+    const errorHandler = ()=>{
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+      if (reg.test(isEmailText) === false) {
+        console.log("Email is Not Correct");
+        return false;
+      }
+      else {
+        setValidEmail(true);
+        console.log("Email is Correct");
+      }
+
+      if(isPassText && isPassText.length > 6){
+        setValidPassword(true);
+      }
+      else{
+        console.log("Pass is inCorrect");
+      }
+    }
+
+    // Sign up Handler
     const SignUpHandler = async ()=>{ 
         console.log("Sign Up function");
-        dispatch(authActions.signup(isEmailText, isPassText));
-        setError(null);
-        setIsLoading(true);
-    try {
-      await dispatch(action);
-      props.navigation.navigate('MyShop');
-    } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
-    }
+        errorHandler();
+        if(validEmail === true && validPassword === true){
+          const action =  dispatch(authActions.signup(isEmailText, isPassText));
+            props.navigation.navigate('RegistrationShop');
+        }
+        else{
+            if(validEmail === false){
+                setCheckError(true);
+                throw new Error("Invalid Email Please Enter a formatted email!")
+            }
+            if(validPassword === false){
+                setCheckError(true);
+                throw new Error("Invalid Password, Password must be of 7 character or more!")
+            }
+        }
+        
       };
 
+      if(checkError){
+          return(
+              <View style={styles.screen}>
+                  <View style={styles.screenError}>
+                      <Text style={{marginTop:70, fontSize:18,marginBottom:10, alignSelf:'center'}}>Invalid Email or Password! </Text>
+                      <Button title="Try Again" onPress={()=>{
+                          setCheckError(false)
+                      }}></Button>
+                  </View>
+              </View>
+
+          )
+      }
+
     return(
-        <ScrollView style={styles.screen}>
+    
+        <View style={styles.screen}>
+         <ScrollView >
             <View style={styles.card}>
             <Image style={styles.Image}  source={{uri:'https://c.neh.tw/thumb/f/720/comvecteezy331973.jpg'}}/>                
            <View style={{flexDirection:'row'}}>
@@ -91,7 +139,7 @@ const Signup = props=>{
            />
            </View>
         <View style={styles.button}>
-        <Button title="Sign Up" onPress={()=>{props.navigation.navigate('RegistrationShop')}}></Button>
+        <Button title="Sign Up" onPress={SignUpHandler}></Button>
         </View>
         <View style={styles.signup}>
         <Text >Already have an account! </Text>
@@ -110,6 +158,8 @@ const Signup = props=>{
    
             </View>
         </ScrollView>
+        </View>
+       
     )
 }
 
@@ -125,8 +175,19 @@ Signup.navigationOptions = navigationData=>{
 }
 
 const styles=StyleSheet.create({
+    screenError:{
+        marginTop:200,
+        marginHorizontal:20,
+        alignItems:'center',
+        alignContent:'center',
+        backgroundColor:'#fff',
+        height:200,
+        width:'90%',
+        borderRadius:10,
+    },
     screen:{
         flex:1,
+       
         backgroundColor:'#DADBD6'
     },
     card:{

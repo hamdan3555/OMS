@@ -9,13 +9,17 @@ const ExistingProductItem = props =>{
             <View style={{...styles.shopItem}}>
             <View style={{flexDirection:'row'}}>
                 <View>
-                    <Text numberOfLines={1} style={styles.nameText}>{props.ProductName}</Text>
-                    <Text style={{ margin:5}}>Brand: {props.ProductBrand}</Text>
+                <Text numberOfLines={1} style={styles.nameText}>{props.ProductName}</Text>
+                <Text style={{ margin:5}}>Quantity: {props.ProductBrand}</Text>
                 </View>
-                <View style={{flexDirection:'row',  marginTop:20}}>
-                <Ionicons style={{marginHorizontal:20, color:'red'}} name="remove-circle-outline" size={24} color="black" />
-                <Ionicons style={{color:'green'}} name="add-circle-outline" size={24} color="black" />
-            </View>    
+                <View style={{ marginLeft:50, marginTop:10}}>
+                <Ionicons style={{marginHorizontal:10, color:'red'}} name="remove-circle-outline" size={24} color="black" onPress={()=>{
+                    
+                }}/>
+                <Ionicons style={{color:'green', marginHorizontal:10}} name="add-circle-outline" size={24} color="black" onPress={()=>{
+                    
+                }}/>
+                </View>    
                 </View>
                
 
@@ -31,7 +35,7 @@ const ExistingProductItem = props =>{
 const styles = StyleSheet.create({
     shopItem:{
         height:70,
-        width:'90%',
+        width:300,
         backgroundColor:'#99BCE2',
         margin:15,
         alignItems:'center',
@@ -40,7 +44,8 @@ const styles = StyleSheet.create({
     },
     nameText:{
         marginTop:5,
-        marginRight:100,
+        marginRight:50,
+        alignContent:'center',
         fontWeight:'bold',
         fontSize:18,
         color:'black'

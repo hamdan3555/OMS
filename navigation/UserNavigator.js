@@ -30,6 +30,7 @@ import AddItemScreen from '../screens/admin/AddItemScreen';
 import DailyCheckinsCheckouts from '../screens/admin/DailyCheckinsCheckouts';
 import MonthlyReports from '../screens/admin/MonthlyReports';
 import ExistingProducts from '../screens/admin/ExistingProducts';
+import BookedItem from '../screens/admin/BookedItem';
 const defaultNavOptions = {
     headerStyle: {
       backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
@@ -124,13 +125,13 @@ const MyNavigator = createStackNavigator(
 
   const adminNavigator = createStackNavigator({
     Login:Login,
-    Signup: SignUp,
     RegistrationShop:RegistrationShop,
     MyShop:MyShop,
     AddItemScreen:AddItemScreen,
     DailyCheckinsCheckouts:DailyCheckinsCheckouts,
     MonthlyReports:MonthlyReports,
     ExistingProducts:ExistingProducts,
+    BookedItem:BookedItem,
     ShopDetailInstallments:ShopDetailInstallments 
 }, {
     navigationOptions: {

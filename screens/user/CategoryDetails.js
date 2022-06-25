@@ -10,21 +10,44 @@ import {
 import Colors from '../../constants/Colors';
 import { ITEMS, shopsDetails} from "../../Data/dummydata";
 import ProductItem from '../../components/ProductItem';
+import { useSelector, useDispatch } from 'react-redux';
+
 const CategoryDetails = props => {
 
-  const selectItemHandler = (id, title) => {
-    props.navigation.navigate('ProductDetails', {
-      productId: id,
-      productTitle: title
-    });
-  };
+  const productId = props.navigation.getParam('productId');
+
+  let brandName = null;
+  const getBrandName = ()=>{
+    if(productId == 1){
+      brandName='Cell Phones'
+    }else if (productId == 2) {
+      brandName='Chargers'
+    } else if (productId == 3) {
+      brandName='Data Cables'
+    } else if (productId == 4) {
+      brandName='Tablet'
+    } else if (productId == 5) {
+      brandName='Handfree'
+    } else if (productId == 6) {
+      brandName='Protector'
+    }
+    return brandName;
+  }
+  getBrandName();
+
+  const availableProductsCellPhone = useSelector(state => state.items.availableProducts.filter(prod => prod.categoryId === productId));
+
   const renderItem =(itemData) =>{
     return(
         <ProductItem 
             title={itemData.item.title}
             URI={itemData.item.URI}
             Price={itemData.item.price}
-            onSelect = {selectItemHandler}
+            onSelect = {()=>{
+              props.navigation.navigate('ProductDetails',{
+                productId: itemData.item.id
+              })
+            }}
         />
     ) ;
     
@@ -32,11 +55,11 @@ const CategoryDetails = props => {
   return (
     <View style={styles.centered}>
       <View style={styles.selectCategory}>
-      <Text style={styles.text}>Category Name</Text>
+      <Text style={styles.text}>{brandName}</Text>
       </View>
     
       <FlatList keyExtractor={(item, index)=> item.id}
-            data={ITEMS}
+            data={availableProductsCellPhone}
             renderItem={renderItem}
             numColumns={3}/>      
     </View>

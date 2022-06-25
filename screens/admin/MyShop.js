@@ -3,7 +3,19 @@ import {View,ScrollView, Text,TextInput,Button, Image, StyleSheet, TouchableNati
 import MyShopItem from "../../components/MyShopItem";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
+import CustomHeaderButton from "../../components/HeaderButtons";
+import {HeaderButtons, Item} from 'react-navigation-header-buttons'
+import * as authActions from '../../store/actions/auth';
+import { useDispatch } from 'react-redux';
+
+
 const MyShop = props=>{
+    const dispatch = useDispatch();
+    const logOutHandler = ()=>{
+        dispatch(authActions.logout());
+        props.navigation.goBack();
+    }
+
     return(
         <View style={styles.screen}>
          <View style={styles.item}>
@@ -13,17 +25,29 @@ const MyShop = props=>{
         <View style={styles.item}>
          <MyShopItem onSelect={()=>{props.navigation.navigate('ShopDetailInstallments')}} givenText='Installment Details'/>
          <MyShopItem onSelect={()=>{props.navigation.navigate('ExistingProducts')}} givenText='Existing Products'/>
+        </View>
+        <View style={{marginTop:130}}>
+        <Button color={"green"} title="Booked Items" onPress={()=>{
+            props.navigation.navigate('BookedItem')
+        }}/>
         </View>  
-
         <View style={styles.addButton}>
-        <View  style={{marginVertical:25, marginLeft:95}}>
+        <View>
+        <View  style={{marginVertical:40, marginLeft:60}}>
         <Ionicons onPress={()=>{
              props.navigation.navigate('AddItemScreen')
-        }} name="ios-add-circle" size={60} color={Colors.lightBlack} />
+        }} name="ios-add-circle" size={50} color={Colors.lightBlack} />
         </View>
-        <Text style={styles.addShop}> Add Item </Text>    
-
+       
         </View>
+        {/* <Image source={} style={{height:50, width:50}} /> */}
+        <View style={{marginTop:50, marginLeft:100}}>
+        <Button  title="LogOut" onPress={logOutHandler}/>
+        
+        </View>    
+       
+        </View>
+       
         </View>
     )
 };
@@ -39,16 +63,16 @@ const styles=StyleSheet.create({
         flexDirection:'row'
     },
     addButton:{
-        marginTop:130,
+        marginTop:10,
         height:"20%",
         width:'100%',
-        backgroundColor:'#99BCE2',
+        backgroundColor:"#ffff",
         borderTopEndRadius:30,
         borderTopStartRadius:30,
         flexDirection:'row',
     },
     addShop:{
-        marginTop:45,
+        marginTop:50,
         fontSize:20,
         marginRight:25,
         fontWeight:'bold'
@@ -61,9 +85,9 @@ MyShop.navigationOptions = navigationData=>{
         headerStyle:{
             backgroundColor:Colors.headerBackground,
             height: 80, // Specify the height of your custom header
-  
           }, 
           headerTintColor:Colors.headerTint, 
+          
   };   
     };
 

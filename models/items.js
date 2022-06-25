@@ -1,5 +1,5 @@
 class item{
-    constructor(id, title, price, URI, categoryId, brandId, description, ){
+    constructor(id, title, price, URI, categoryId, brandId, description,quantity, userId){
         this.id = id;
         this.title = title;
         this.price = price;
@@ -7,6 +7,8 @@ class item{
         this.categoryId=categoryId;
         this.brandId=brandId;
         this.description=description;
+        this.quantity=quantity;
+        this.userId = userId;
     }
 }
 

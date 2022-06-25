@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "336511317970",
+    "project_id": "oms-fyp-a8be4",
+    "storage_bucket": "oms-fyp-a8be4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336511317970:android:036ec26aa17c9a713c3a0b",
+        "android_client_info": {
+          "package_name": "com.namal.OMS"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336511317970-c1kjkjh596mmd0506oln8uc2muaa9udp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcmj83dnjDggz_bPPwQF9yuVwGtvP6oLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336511317970-c1kjkjh596mmd0506oln8uc2muaa9udp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

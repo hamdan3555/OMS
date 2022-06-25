@@ -9,8 +9,8 @@ const ProductItem = props =>{
                 <Image style={styles.Image} source={{uri:props.URI}}>
                 </Image>
                 <View style={{marginTop:10, alignItems:'center'}}>
-                <Text >{props.title}</Text>
-                <Text>Price:{props.Price}</Text>
+                <Text numberOfLines={1}>{props.title}</Text>
+                <Text numberOfLines={1}>Price:{props.Price}</Text>
                 </View>
                 </View>
             </TouchableOpacity>
@@ -22,7 +22,7 @@ const ProductItem = props =>{
 
 const styles=StyleSheet.create({
     container:{
-        height:140,
+        height:150,
         width: 100,
        // paddingHorizontal:15,
        // paddingVertical:10,
@@ -35,8 +35,8 @@ const styles=StyleSheet.create({
 
     },
     Image:{
-        height:'60%',
-        width:'100%',
+        height:80,
+        width:80,
         borderRadius:10,
         marginTop:5,
     }

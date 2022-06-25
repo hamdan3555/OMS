@@ -12,10 +12,6 @@ const CheckOutItem = props =>{
             <Text>Qauntity:  {props.Quantity}</Text>
 
             </View>
-      
-        
-        
-
     );
 }
 

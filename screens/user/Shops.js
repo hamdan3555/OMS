@@ -1,18 +1,29 @@
 import React , {useEffect} from "react";
-import {View,SafeAreaView,FlatList, Text, Image, StyleSheet} from 'react-native';
+import {View,SafeAreaView,FlatList, Text, Image, StyleSheet, LogBox} from 'react-native';
 import ShopGrid from "../../components/ShopGrid";
 import Colors from "../../constants/Colors";
 import { shopsDetails } from "../../Data/dummydata";
-
+import * as productsActions from '../../store/actions/addShop';
+import { useSelector, useDispatch } from 'react-redux';
 const Shops = props=>{
-  
+
+    const dispatch = useDispatch();
+    dispatch(productsActions.fetchShops());
+   useEffect(()=>{
+    LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+   });
+    
+    const products = useSelector(state => state.shops.availableProducts);
+   // console.log(products)
 
     const renderGridItem =(itemData) =>{
         return(
             <ShopGrid 
                 ShopName={itemData.item.title}
                 ShopAddress={itemData.item.address}
-                onSelect = {()=>{props.navigation.navigate('ShopDetails')}}
+                onSelect = {()=>{props.navigation.navigate('ShopDetails', {
+                    productId: itemData.item.id,
+                })}}
             />
         ) ;
         
@@ -25,7 +36,7 @@ const Shops = props=>{
         <View style={styles.screen}>
              <FlatList  
              style={{marginLeft:10}}
-             data={shopsDetails}
+             data={products}
             renderItem={renderGridItem}
         />
        

@@ -1,44 +1,28 @@
 import React ,{useState}from "react";
 import { View, TextInput, Button, ScrollView, StyleSheet, Text,  } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { shopsDetails } from "../../Data/dummydata";
 import Colors from "../../constants/Colors";
+import * as productsActions from '../../store/actions/addShop';
+import { useSelector, useDispatch } from 'react-redux';
+import * as authActions from '../../store/actions/auth';    
 
 const RegistrationShop = props=>{
     const [isShopName, setIsShopName] = useState('');
     const [isShopAddress, setIsShopAddress] = useState('');
+    const [isShopContact, setIsShopContact] = useState('');
+    const [isShopAbout, setIsShopAbout] = useState('');
+    const [isShopEmail, setIsShopEmail] = useState('');
+
+    const userId = useSelector(state => state.auth.userId);
+    console.log(userId)
+    const dispatch = useDispatch();
     
     return(
         <View style={styles.container}>
             <Text style={{fontSize:20, fontWeight:'bold', margin:15}}>Add Details</Text>
-            <ScrollView>
-                 <View style={{flexDirection:'row'}}>
-                 <View style={{marginTop:15}}>
-                <Ionicons name="mail-sharp" size={24} color="black" />
-                </View>
-                <TextInput 
-                numberOfLines={1}
-                style={styles.placeholder}
-                placeholder="Email Address"
-                keyboardType='name-phone-pad'
-                
-                />
-                </View>
-
-                <View style={{flexDirection:'row'}}>
-                 <View style={{marginTop:15}}>
-                <Ionicons name="md-lock-closed-sharp" size={24} color="black" />
-                </View>
-                <TextInput 
-                numberOfLines={1}
-                style={styles.placeholder}
-                placeholder="Password"
-                keyboardType='name-phone-pad'
-                secureTextEntry={true}
-                password={true}
-                />
-                </View>
-
+            <View>
+                 
+               
                 <View style={{flexDirection:'row'}}>
                  <View style={{marginTop:15}}>
                 <Ionicons name="md-home" size={24} color="black" />
@@ -50,6 +34,19 @@ const RegistrationShop = props=>{
                 keyboardType='name-phone-pad'
                 onChangeText={setIsShopName}
                 value={isShopName}
+                />
+                </View>
+                <View style={{flexDirection:'row'}}>
+                 <View style={{marginTop:15}}>
+                <Ionicons name="md-home" size={24} color="black" />
+                </View>
+                <TextInput 
+                numberOfLines={1}
+                style={styles.placeholder}
+                placeholder="Email"
+                keyboardType='name-phone-pad'
+                onChangeText={setIsShopEmail}
+                value={isShopEmail}
                 />
                 </View>
 
@@ -75,6 +72,8 @@ const RegistrationShop = props=>{
                 style={styles.placeholder}
                 placeholder="Contact Number"
                 keyboardType='number-pad'
+                onChangeText={setIsShopContact}
+                value={isShopContact}
                 />
                 </View>
                 <View style={{flexDirection:'row'}}>
@@ -86,23 +85,19 @@ const RegistrationShop = props=>{
                 style={styles.placeholder}
                 placeholder="About Shop"
                 keyboardType='name-phone-pad'
-                
+                onChangeText={setIsShopAbout}
+                value={isShopAbout}
                 />
                 </View>
 
                 <View style={{alignItems:'center', marginTop:15, marginLeft:10, }}>
                     <Button title="Add Shop" onPress={()=>{
-                        props.navigation.navigate(
-                            {
-                                routeName:'MyShop',
-                               
-                            },
-                           
-                        )
+                        dispatch(productsActions.createShop(userId, isShopName, isShopAddress, isShopAbout, isShopContact, isShopEmail));
+                        props.navigation.navigate('MyShop')
                     }}></Button>
                 </View>
 
-            </ScrollView>
+            </View>
         </View>
     )
 }

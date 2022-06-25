@@ -9,8 +9,8 @@ const Accessories = props =>{
                 <Image style={styles.Image} source={{uri:props.URI}}>
                 </Image>
                 <View style={{marginTop:5, alignItems:'center'}}>
-                <Text >{props.title}</Text>
-                <Text>Price:{props.Price}</Text>
+                <Text numberOfLines={1} >{props.title}</Text>
+                <Text numberOfLines={1}>Price:{props.Price}</Text>
                 </View>
                 </View>
             </TouchableOpacity>
@@ -35,8 +35,8 @@ const styles=StyleSheet.create({
 
     },
     Image:{
-        height:'50%',
-        width:'80%',
+        height:50,
+        width:50,
         alignItems:'center',
         alignContent:'center',
         borderRadius:10,

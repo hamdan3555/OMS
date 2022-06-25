@@ -42,10 +42,10 @@ const styles=StyleSheet.create({
         width:80,
         borderRadius:10,
         marginTop:10,
-        borderTopEndRadius:10,
-        borderTopStartRadius:10,
-        borderBottomEndRadius:10,
-        borderBottomStartRadius:10,
+       // borderTopEndRadius:10,
+       // borderTopStartRadius:10,
+       // borderBottomEndRadius:10,
+       // borderBottomStartRadius:10,
     }
     
 });

@@ -11,14 +11,46 @@ import Colors from '../../constants/Colors';
 import { ITEMS, shopsDetails} from "../../Data/dummydata";
 import ProductItem from '../../components/ProductItem';
 import Accessories from '../../components/Accessories';
-const BrandDetails = props => {
+import * as itemsActions from '../../store/actions/addItem';
+import { useSelector, useDispatch } from 'react-redux';
 
-  const selectItemHandler = (id, title) => {
-    props.navigation.navigate('ProductDetails', {
-      productId: id,
-      productTitle: title
-    });
-  };
+const BrandDetails = props => {
+  const productId = props.navigation.getParam('productId');
+  let brandName = null;
+const getBrandName = ()=>{
+  if(productId == 1){
+    brandName='Apple'
+  }else if (productId == 2) {
+    brandName='Samsung'
+  } else if (productId == 3) {
+    brandName='Oppo'
+  } else if (productId == 4) {
+    brandName='Vivo'
+  } else if (productId == 5) {
+    brandName='Infinix'
+  } else if (productId == 6) {
+    brandName='Nokia'
+  } else if (productId == 7) {
+    brandName='Motorola'
+  } else if (productId == 8) {
+    brandName='Lenovo'
+  } else if (productId == 9) {
+    brandName='Techno'
+  } else if (productId == 10) {
+    brandName='Huwawei'
+  } 
+  return brandName;
+}
+getBrandName();
+  const dispatch = useDispatch();
+  dispatch(itemsActions.fetchItems());
+
+  const availableProductsCellPhone = useSelector(state => state.items.availableProducts.filter(prod => prod.brandId === productId && prod.categoryId === 1));
+  const availableProductsAccessories = useSelector(state => state.items.availableProducts.filter(prod => prod.brandId === productId && prod.categoryId !== 1));
+
+  //console.log(products)
+
+ 
 
   const renderItem =(itemData) =>{
     return(
@@ -26,7 +58,11 @@ const BrandDetails = props => {
             title={itemData.item.title}
             URI={itemData.item.URI}
             Price={itemData.item.price}
-            onSelect = {selectItemHandler}
+            onSelect = {()=>{
+              props.navigation.navigate('ProductDetails', {
+                productId:itemData.item.id
+              })
+            }}
         />
     ) ;
     
@@ -40,24 +76,24 @@ const renderItemAccessories =(itemData) =>{
           Price={itemData.item.price}
           onSelect = {()=>{
               props.navigation.navigate({
-                  routeName:'Booking',
-                  params:{categoryId: itemData.item.id}
+                  routeName:'ProductDetails',
+                  params:{productId: itemData.item.id}
               })
           }}
       />
   ) ;
-  
 }
+
   return (
     <View style={styles.centered}>
       <View style={styles.selectCategory}>
-      <Text style={styles.text}>Brand Name</Text>
+      <Text style={styles.text}>{brandName}</Text>
       </View>
 
       <View style={styles.cellPhone}>
       <Text style={{marginLeft:20, fontSize:17, fontWeight:'bold', textDecorationLine: 'underline', margin:10}}>Cell Phones:</Text>
       <FlatList keyExtractor={(item, index)=> item.id}
-            data={ITEMS}
+            data={availableProductsCellPhone}
             renderItem={renderItem}
             numColumns={3}/>
       </View>
@@ -67,7 +103,7 @@ const renderItemAccessories =(itemData) =>{
         <View style={styles.accessories}>
         <FlatList style={{flex:1, flexDirection:'row', }} 
             keyExtractor={(item, index)=> item.id}
-            data={ITEMS}
+            data={availableProductsAccessories}
             renderItem={renderItemAccessories}
             horizontal={true}
            />

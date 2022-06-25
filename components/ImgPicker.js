@@ -7,8 +7,6 @@ import Colors from '../constants/Colors';
 const ImgPicker = props => {
   const [pickedImage, setPickedImage] = useState();
 
-
-
   const takeImageHandler = async () => {
     
     const image = await ImagePicker.launchCameraAsync({
@@ -18,9 +16,11 @@ const ImgPicker = props => {
     });
 
     setPickedImage(image.uri);
+    
     props.onImageTaken(image.uri);
   };
-
+  //console.log("Test")
+  //console.log(pickedImage)
   return (
     <View style={styles.imagePicker}>
       <View style={styles.imagePreview}>
@@ -29,6 +29,7 @@ const ImgPicker = props => {
         ) : (
           <Image style={styles.image} source={{ uri: pickedImage }} />
         )}
+        
       </View>
       <Button
         title="Take Image"

@@ -1,24 +1,27 @@
 import React , {useEffect} from "react";
-import {View,SafeAreaView,FlatList, Text, Image, StyleSheet} from 'react-native';
+import {View,FlatList, Text, Image, StyleSheet} from 'react-native';
 import ShopGrid from "../../components/ShopGrid";
 import Colors from "../../constants/Colors";
 import { ITEMS } from "../../Data/dummydata";
-
+import { useSelector } from "react-redux";
 const ShopInformation = props=>{
-  
+    const productId = props.navigation.getParam('id');
+    const selectedProduct = useSelector(state =>
+        state.shops.availableProducts.find(prod => prod.userId === productId)
+        );
 
 
 
     return(
         
         <View style={styles.screen}>
-        <Text style={{fontSize:20, fontWeight:'bold', marginTop:30}}> Marhaba Mobiles</Text>
-        <Text style={{color:'blue'}}>marhabab@email.com</Text>
-        <Text>Muslim Town Multan</Text>
+        <Text style={{fontSize:20, fontWeight:'bold', marginTop:30}}>{selectedProduct.title}</Text>
+        <Text style={{color:'blue'}}>{selectedProduct.email}</Text>
+        <Text>{selectedProduct.address}</Text>
 
         <View style={{marginTop:10, flexDirection:'row'}}> 
         <Text style={{fontSize:16, fontWeight:'bold'}}>Phone:</Text>
-        <Text style={{marginLeft:5, color:'blue'}}>+923000000000</Text>
+        <Text style={{marginLeft:5, color:'blue'}}>{selectedProduct.phone}</Text>
         </View>  
          
         <View style={{marginTop:40, }}> 
